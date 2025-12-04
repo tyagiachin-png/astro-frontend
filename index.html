@@ -1,1 +1,57 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Astrology Analysis</title>
+  <style>
+    body { font-family: Arial; padding: 20px; }
+    input { padding: 8px; width: 250px; margin-bottom: 10px; }
+    button { padding: 10px 20px; background: green; color: white; border: none; }
+    .box { border: 1px solid #ccc; padding: 20px; width: 350px; }
+  </style>
+</head>
+<body>
+
+<h2>Astrology Analysis Tool</h2>
+
+<div class="box">
+  <label>Name:</label><br>
+  <input id="name" type="text"><br>
+
+  <label>Date of Birth (YYYY-MM-DD):</label><br>
+  <input id="dob" type="text"><br>
+
+  <label>Time of Birth (HH:MM):</label><br>
+  <input id="tob" type="text"><br>
+
+  <label>Place:</label><br>
+  <input id="place" type="text"><br>
+
+  <button onclick="submitData()">Analyze</button>
+</div>
+
+<h3>Result:</h3>
+<pre id="result"></pre>
+
+<script>
+async function submitData() {
+  const data = {
+    name: document.getElementById("name").value,
+    dob: document.getElementById("dob").value,
+    tob: document.getElementById("tob").value,
+    place: document.getElementById("place").value
+  };
+
+  const res = await fetch("https://astro-backend-3q1b.onrender.com/analyze", {
+    method: "POST",
+    headers: {"Content-Type": "application/json"},
+    body: JSON.stringify(data)
+  });
+
+  const out = await res.json();
+  document.getElementById("result").innerText = JSON.stringify(out, null, 2);
+}
+</script>
+
+</body>
+</html>
 
